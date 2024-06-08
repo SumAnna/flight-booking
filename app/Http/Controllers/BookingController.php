@@ -77,21 +77,9 @@ class BookingController extends Controller
     public function index(Request $request): Response|Collection
     {
         $user = Auth::user();
-
         $responseType = $request->query('response', 'inertia');
 
-        $bookings = Booking::where('user_id', $user->id)
-            ->with(['flight.segments' => function ($query) {
-                $query->orderBy('departure_time');
-            }])
-            ->get()
-            ->map(function ($booking) {
-                $flight = $booking->flight;
-                $flight->booking_id = $booking->id;
-                $flight->cancelled = $booking->cancelled;
-                return $flight;
-            })
-            ->groupBy('status');
+        $bookings = Booking::getUserBookings($user->id);
 
         if ($responseType === 'inertia') {
             return Inertia::render('Bookings/Show', [

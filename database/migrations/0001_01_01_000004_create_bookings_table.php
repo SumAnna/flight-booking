@@ -17,7 +17,8 @@ return new class extends Migration
                 ->constrained()->onDelete('cascade');
             $table->foreignId('flight_id')
                 ->constrained()->onDelete('cascade');
-            $table->boolean('cancelled') ->default(false);
+            $table->boolean('cancelled') ->default(false)
+                ->index('cancelled_idx');
             $table->timestamps();
 
             $table->unique(['user_id', 'flight_id']);

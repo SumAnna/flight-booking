@@ -85,21 +85,19 @@ class Flight extends Model
         $now = Carbon::now();
 
         return $query->with('segments')
-            ->leftJoin('bookings', function ($join) {
-                $join->on('flights.id', '=', 'bookings.flight_id')
-                    ->where('bookings.cancelled', '=', false);
-            })
             ->where('flights.last_ticketing_date_time', '>', $now)
             ->where('flights.number_of_seats', '>', 0)
             ->whereDoesntHave('bookings', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
+                $query->where('user_id', $userId)
+                    ->where('cancelled', false);
             })
             ->whereHas('segments', function ($query) use ($now) {
-                $query->where('segments.departure_time', '>', $now);
+                $query->where('departure_time', '>', $now);
             })
-            ->select('flights.*',
-                DB::raw('COUNT(bookings.id) as bookings_count')
-            )
+            ->leftJoin(DB::raw('(SELECT flight_id, MIN(departure_time) AS min_departure_time FROM segments GROUP BY flight_id) AS earliest_departures'), function($join) {
+                $join->on('flights.id', '=', 'earliest_departures.flight_id');
+            })
+            ->orderBy('earliest_departures.min_departure_time')
             ->groupBy('flights.id');
     }
 

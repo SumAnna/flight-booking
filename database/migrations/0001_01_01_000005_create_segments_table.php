@@ -15,8 +15,10 @@ class CreateSegmentsTable extends Migration
             $table->string('flight_number');
             $table->string('departure_iata');
             $table->string('arrival_iata');
-            $table->dateTime('departure_time');
-            $table->dateTime('arrival_time');
+            $table->dateTime('departure_time')
+                ->index('departure_time_idx');
+            $table->dateTime('arrival_time')
+                ->index('arrival_time_idx');
             $table->integer('number_of_stops');
             $table->string('duration');
             $table->timestamps();

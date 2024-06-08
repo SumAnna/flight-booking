@@ -26,7 +26,12 @@
                     <td class="py-2 px-4 border-b border-gray-700">
                         <ul>
                             <li v-for="segment in flight.segments" :key="segment.id">
-                                {{ segment.departure_iata }} ({{ formatDate(segment.departure_time) }}) - {{ segment.arrival_iata }} ({{ formatDate(segment.arrival_time) }}) | Duration: {{ segment.duration }}
+                                <div class="segment-info">
+                                    <span>{{ segment.departure_iata }} <span class="datetime">({{ formatDate(segment.departure_time) }})</span></span>
+                                    <span> - </span>
+                                    <span>{{ segment.arrival_iata }} <span class="datetime">({{ formatDate(segment.arrival_time) }})</span></span>
+                                </div>
+                                <div class="duration">Duration: {{ segment.duration }}</div>
                             </li>
                         </ul>
                     </td>
@@ -71,8 +76,15 @@ const props = defineProps({
 const emit = defineEmits(['book-flight', 'delete-booking']);
 
 const formatDate = (dateString) => {
-    const options = { hour: '2-digit', minute: '2-digit' };
-    return new Date(dateString).toLocaleTimeString([], options);
+    const options = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+    return new Date(dateString).toLocaleString('en-US', options);
 };
 
 const emitBookFlight = (flightId) => {
@@ -83,3 +95,25 @@ const emitDeleteBooking = (bookingId) => {
     emit('delete-booking', bookingId);
 };
 </script>
+
+<style scoped>
+.container {
+    max-width: 800px;
+}
+
+.segment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.datetime {
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+.duration {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.2rem;
+}
+</style>

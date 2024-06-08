@@ -15,8 +15,10 @@ class CreateFlightsTable extends Migration
             $table->string('currency');
             $table->decimal('price', 10, 2);
             $table->integer('number_of_seats');
-            $table->string('last_ticketing_date');
-            $table->string('last_ticketing_date_time');
+            $table->string('last_ticketing_date')
+                ->index('last_ticketing_date_idx');
+            $table->string('last_ticketing_date_time')
+                ->index('last_ticketing_date_time_idx');
             $table->string('duration');
             $table->timestamps();
         });
