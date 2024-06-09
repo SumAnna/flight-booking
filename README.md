@@ -8,7 +8,6 @@ This flight booking system, built with Laravel and Vue.js, efficiently manages f
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Steps](#steps)
-- [Configuration](#configuration)
 - [Running the Project](#running-the-project)
 - [Features](#features)
   - [Flight Management](#flight-management)
@@ -51,30 +50,31 @@ Ensure you have the following installed:
    ```bash
    cp .env .env.testing
    ```
-6. Generate an application key:
+6. Ensure you configure your .env and .env.testing files with the correct database credentials and other necessary configurations.<br/>   
+7. Generate an application key:
    ```bash
    php artisan key:generate
    ```
-7. Build the front-end assets:
+8. If you are working on Linux server, set the owner and group of the 'storage' directory to make it writable:
    ```bash
-   npm run dev
-   ```
-8. Run the database migrations:
-   ```bash
-   php artisan migrate
-   ```
-9. Import flight data from a JSON file into the database using:
-   ```bash
-   php artisan import:flight-data
-   ```
-10. Start the Laravel queue worker to process the jobs scheduled by the previous command:
+   sudo chown www-data:www-data storage -R
+   ```   
+9. Build the front-end assets:
+    ```bash
+    npm run dev
+    ```
+10. Run the database migrations:
+    ```bash
+    php artisan migrate
+    ```
+11. Import flight data from a JSON file into the database using:
+    ```bash
+    php artisan import:flight-data
+    ```
+12. Start the Laravel queue worker to process the jobs scheduled by the previous command:
     ```bash
     php artisan queue:work
     ```
-
-
-## Configuration
-Ensure you configure your .env file with the correct database credentials and other necessary configurations.
 
 ## Running the Project
 1. Build the frontend assets:
