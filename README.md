@@ -73,11 +73,15 @@ Ensure you have the following installed:
     ```
 
 ## Running the Project
-1. Build the frontend assets:
+1. Build the dependencies:
+   ```bash
+   npm run build
+   ```
+2. Build the frontend assets:
    ```bash
    npm run dev
    ```
-2. Start the development server:
+3. Start the development server:
    ```bash
    php artisan serve
    ```
