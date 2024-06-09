@@ -55,10 +55,7 @@ Ensure you have the following installed:
    ```bash
    php artisan key:generate
    ```
-8. If you are working on Linux server, set the owner and group of the 'storage' directory to make it writable:
-   ```bash
-   sudo chown www-data:www-data storage -R
-   ```
+8. If you are working on Linux server, make sure laravel.log file is writable and all permissions are set correctly.</br>
 9. Run the database migrations:
     ```bash
     php artisan migrate
@@ -71,7 +68,6 @@ Ensure you have the following installed:
     ```bash
     php artisan queue:work
     ```
-
 ## Running the Project
 1. Build the dependencies:
    ```bash
