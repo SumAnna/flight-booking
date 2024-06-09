@@ -58,20 +58,16 @@ Ensure you have the following installed:
 8. If you are working on Linux server, set the owner and group of the 'storage' directory to make it writable:
    ```bash
    sudo chown www-data:www-data storage -R
-   ```   
-9. Build the front-end assets:
-    ```bash
-    npm run dev
-    ```
-10. Run the database migrations:
+   ```
+9. Run the database migrations:
     ```bash
     php artisan migrate
     ```
-11. Import flight data from a JSON file into the database using:
+10. Import flight data from a JSON file into the database using:
     ```bash
     php artisan import:flight-data
     ```
-12. Start the Laravel queue worker to process the jobs scheduled by the previous command:
+11. Start the Laravel queue worker to process the jobs scheduled by the previous command:
     ```bash
     php artisan queue:work
     ```
