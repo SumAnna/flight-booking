@@ -26,7 +26,7 @@ class ImportFlightDataTest extends TestCase
      */
     public function test_import_flight_data_job()
     {
-        $filePath = base_path('storage/app/data/flightData.json');
+        $filePath = base_path('storage/app/public/flightData.json');
 
         $this->assertFileExists($filePath, "The flight data file does not exist at $filePath");
 

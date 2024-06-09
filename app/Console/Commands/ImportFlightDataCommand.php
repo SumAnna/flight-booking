@@ -41,7 +41,7 @@ class ImportFlightDataCommand extends Command
      */
     public function handle(): void
     {
-        $filePath = env('FLIGHT_DATA_PATH', 'storage/app/data/flightData.json');
+        $filePath = env('FLIGHT_DATA_PATH', 'storage/app/public/flightData.json');
 
         if (!file_exists($filePath)) {
             $this->error('Flight data file not found.');
