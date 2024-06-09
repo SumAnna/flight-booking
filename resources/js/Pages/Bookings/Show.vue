@@ -39,7 +39,7 @@ import { ref, watch } from 'vue';
 import FlightTable from '@/Components/FlightTable.vue';
 import axios from 'axios';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {Head} from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
     flights: Object,
