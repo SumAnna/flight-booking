@@ -43,9 +43,15 @@ const pollFlights = () => {
 
 const bookFlight = (flightId) => {
     axios.post('/bookings/store/' + flightId)
-        .then(() => {
-            alert('Booking confirmed.');
-            pollFlights();
+        .then((response) => {
+            if (response.data.error) {
+                alert('Error: ' + response.data.error);
+            } else if (response.data.success) {
+                alert(response.data.success);
+                pollFlights();
+            } else {
+                alert('Unknown error.');
+            }
         })
         .catch((error) => {
             if (error.response && error.response.data.error) {

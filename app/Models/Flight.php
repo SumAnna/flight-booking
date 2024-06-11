@@ -87,18 +87,17 @@ class Flight extends Model
         return $query->with('segments')
             ->where('flights.last_ticketing_date_time', '>', $now)
             ->where('flights.number_of_seats', '>', 0)
-            ->whereDoesntHave('bookings', function ($query) use ($userId) {
-                $query->where('user_id', $userId)
-                    ->where('cancelled', false);
-            })
-            ->whereHas('segments', function ($query) use ($now) {
-                $query->where('departure_time', '>', $now);
+            ->leftJoin('bookings', function ($join) {
+                $join->on('flights.id', '=', 'bookings.flight_id')
+                    ->where('bookings.cancelled', '=', false);
             })
             ->leftJoin(DB::raw('(SELECT flight_id, MIN(departure_time) AS min_departure_time FROM segments GROUP BY flight_id) AS earliest_departures'), function($join) {
                 $join->on('flights.id', '=', 'earliest_departures.flight_id');
             })
+            ->select('flights.*', DB::raw('COUNT(bookings.id) as bookings_count'))
             ->orderBy('earliest_departures.min_departure_time')
-            ->groupBy('flights.id');
+            ->groupBy('flights.id')
+            ->havingRaw('flights.number_of_seats > COUNT(bookings.id)');
     }
 
     /**
